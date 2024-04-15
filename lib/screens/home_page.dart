@@ -1,4 +1,5 @@
 import 'package:cubit_0/cubit/counter_cubit.dart';
+import 'package:cubit_0/cubit/counter_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -13,12 +14,18 @@ class HomePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            BlocBuilder<CounterCubit, int>(
+            // BlocBuilder<CounterCubit, int>(
+            BlocBuilder<CounterCubit, CounterState>(
               
               builder: (_, state) {
-                print('BlocBuilder build $state');
-              return Text('${state}',style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 30));
-            },)
+                print('BlocBuilder build ${state.count}');
+                if(state.isLoading) {
+                  return const CircularProgressIndicator();
+                }else {
+                  return Text('${state.count}', style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 30));
+                }
+             },)
           ],
         ),
       ),
